@@ -1,21 +1,67 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react'
+import { SafeAreaView, Pressable, TextInput, View } from 'react-native'
+import tailwind from 'tailwind-rn'
+import RegularText from './components/RegularText'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [newTask, setNewTask] = useState('')
+  const [tasks, setTasks] = useState([''])
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  const handleAdd = () => {
+    if (newTask.trim() === '') {
+      return
+    }
+
+    setTasks([...tasks, newTask])
+    setNewTask('')
+  }
+
+  return (
+    <SafeAreaView
+      style={[
+        { backgroundColor: '#181818' },
+        tailwind('min-h-full p-4 flex-1'),
+      ]}
+    >
+      <TextInput
+        value={newTask}
+        onChangeText={(input) => setNewTask(input)}
+        placeholder='Enter your task here'
+        style={[
+          {
+            fontSize: 20,
+          },
+          tailwind('bg-gray-800 p-2 text-white'),
+        ]}
+      />
+
+      <Pressable
+        onPress={handleAdd}
+        style={tailwind('bg-blue-500 py-1 px-3 mb-4')}
+      >
+        <RegularText>+ Add task</RegularText>
+      </Pressable>
+
+      {tasks.map((task, index) => {
+        return (
+          <View key={index}>
+            {task !== '' && (
+              <View style={tailwind('mb-4 flex flex-row items-center')}>
+                <Pressable
+                  onPress={() => {
+                    setTasks(tasks.filter((_, i) => i !== index))
+                  }}
+                  style={tailwind('px-3')}
+                >
+                  <RegularText>✔</RegularText>
+                </Pressable>
+
+                <RegularText>{task}</RegularText>
+              </View>
+            )}
+          </View>
+        )
+      })}
+    </SafeAreaView>
+  )
+}
