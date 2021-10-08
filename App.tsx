@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { SafeAreaView, Pressable, TextInput, View } from 'react-native'
+import { SafeAreaView, Pressable, TextInput, View, Text } from 'react-native'
 import tailwind from 'tailwind-rn'
-import RegularText from './components/RegularText'
+import { globalStyles } from './app/styles/global'
+
+const { heading1, regularText } = globalStyles
 
 export default function App() {
   const [newTask, setNewTask] = useState('')
@@ -23,23 +25,19 @@ export default function App() {
         tailwind('min-h-full p-4 flex-1'),
       ]}
     >
+      <Text style={[heading1, tailwind('mb-4')]}>To-do</Text>
       <TextInput
         value={newTask}
         onChangeText={(input) => setNewTask(input)}
         placeholder='Enter your task here'
-        style={[
-          {
-            fontSize: 20,
-          },
-          tailwind('bg-gray-800 p-2 text-white'),
-        ]}
+        style={[regularText, tailwind('bg-gray-800 p-2')]}
       />
 
       <Pressable
         onPress={handleAdd}
         style={tailwind('bg-blue-500 py-1 px-3 mb-4')}
       >
-        <RegularText>+ Add task</RegularText>
+        <Text style={regularText}>+ Add task</Text>
       </Pressable>
 
       {tasks.map((task, index) => {
@@ -53,10 +51,10 @@ export default function App() {
                   }}
                   style={tailwind('px-3')}
                 >
-                  <RegularText>✔</RegularText>
+                  <Text style={regularText}>✔</Text>
                 </Pressable>
 
-                <RegularText>{task}</RegularText>
+                <Text style={regularText}>{task}</Text>
               </View>
             )}
           </View>
