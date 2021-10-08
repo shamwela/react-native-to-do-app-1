@@ -5,7 +5,7 @@ import { globalStyles } from './app/styles/global'
 
 const { heading1, regularText } = globalStyles
 
-export default function App() {
+const App = () => {
   const [newTask, setNewTask] = useState('')
   const [tasks, setTasks] = useState([''])
 
@@ -30,7 +30,7 @@ export default function App() {
         value={newTask}
         onChangeText={(input) => setNewTask(input)}
         placeholder='Enter your task here'
-        style={[regularText, tailwind('bg-gray-800 p-2')]}
+        style={[regularText, tailwind('bg-gray-800 p-2'), { outline: 'none' }]}
       />
 
       <Pressable
@@ -63,3 +63,5 @@ export default function App() {
     </SafeAreaView>
   )
 }
+
+export default App
