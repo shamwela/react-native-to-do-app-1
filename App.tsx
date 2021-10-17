@@ -20,46 +20,57 @@ const App = () => {
 
   return (
     <SafeAreaView
-      style={[
-        { backgroundColor: '#181818' },
-        tailwind('min-h-full p-4 flex-1'),
-      ]}
+      style={{ backgroundColor: '#181818', minHeight: '100%', padding: 16 }}
     >
-      <Text style={[heading1, tailwind('mb-4')]}>To-do</Text>
-      <TextInput
-        value={newTask}
-        onChangeText={(input) => setNewTask(input)}
-        placeholder='Enter your task here'
-        style={[regularText, tailwind('bg-gray-800 p-2'), { outline: 'none' }]}
-      />
-
-      <Pressable
-        onPress={handleAdd}
-        style={tailwind('bg-blue-500 py-1 px-3 mb-4')}
+      <View
+        style={{
+          backgroundColor: '#181818',
+          width: '100%',
+          maxWidth: 768,
+          marginHorizontal: 'auto',
+          flex: 1,
+        }}
       >
-        <Text style={regularText}>+ Add task</Text>
-      </Pressable>
-
-      {tasks.map((task, index) => {
-        return (
-          <View key={index}>
-            {task !== '' && (
-              <View style={tailwind('mb-4 flex flex-row items-center')}>
-                <Pressable
-                  onPress={() => {
-                    setTasks(tasks.filter((_, i) => i !== index))
-                  }}
-                  style={tailwind('px-3')}
-                >
-                  <Text style={regularText}>✔</Text>
-                </Pressable>
-
-                <Text style={regularText}>{task}</Text>
-              </View>
-            )}
-          </View>
-        )
-      })}
+        <Text style={[heading1, tailwind('mb-4')]}>To-do</Text>
+        <TextInput
+          value={newTask}
+          onChangeText={(input) => setNewTask(input)}
+          placeholder='Enter your task here'
+          style={[
+            regularText,
+            tailwind('bg-gray-800 p-2'),
+            { outline: 'none' },
+          ]}
+        />
+        <Pressable
+          onPress={handleAdd}
+          style={[
+            tailwind('bg-blue-500 py-1 px-3 mb-4'),
+            { cursor: 'pointer' },
+          ]}
+        >
+          <Text style={regularText}>+ Add task</Text>
+        </Pressable>
+        {tasks.map((task, index) => {
+          return (
+            <View key={index}>
+              {task !== '' && (
+                <View style={tailwind('mb-4 flex flex-row items-center')}>
+                  <Pressable
+                    onPress={() => {
+                      setTasks(tasks.filter((_, i) => i !== index))
+                    }}
+                    style={[tailwind('px-3'), { cursor: 'pointer' }]}
+                  >
+                    <Text style={regularText}>✔</Text>
+                  </Pressable>
+                  <Text style={regularText}>{task}</Text>
+                </View>
+              )}
+            </View>
+          )
+        })}
+      </View>
     </SafeAreaView>
   )
 }
